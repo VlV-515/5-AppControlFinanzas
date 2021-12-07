@@ -1,0 +1,61 @@
+.container {
+  width: 98%;
+  height: 98vh;
+  margin: 0.5rem auto;
+  box-shadow: 0px 0px 5px 5px rgb(46, 46, 46);
+  border-radius: 5px;
+  background: rgb(46, 46, 46);
+}
+.header {
+  padding: 1rem;
+}
+
+.title {
+  margin: 1rem 0 1.3rem;
+  display: flex;
+  justify-content: space-between;
+}
+.titleMsg {
+  color: #d3d5d5;
+}
+.titleDate {
+  color: #d3d5d5;
+}
+.resumeWrapper > div,
+.resumeTitle {
+  padding: 3px;
+  border: 1px solid #aaa;
+}
+.gridContainer {
+  width: 95%;
+  margin: 20px auto;
+  text-align: center;
+  border-radius: 5px;
+
+  border: 2px solid #aaa;
+}
+.resumeWrapper {
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+}
+.itemWrapper {
+  font-weight: bold;
+}
+.resumeTitle {
+  background: #797979;
+}
+
+.entradaData {
+  background: #00a19d;
+}
+.salidaData {
+  background: #e05d5d;
+}
+.externoData {
+  background: #ffb344;
+}
+.totalData {
+  background: #fff8e5;
+}
