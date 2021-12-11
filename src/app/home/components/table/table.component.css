@@ -1,3 +1,5 @@
+/*TODO: Investigar como hacer lo de pasar por un div y remarcar toda la fila*/
+/*TODO: Cambiar los botones que se queden en una sola linea*/
 .containerTable {
   border-radius: 5px;
   border: 2px solid #aaa;
@@ -22,7 +24,6 @@
   color: #eee;
 }
 .lineTable > div:hover {
-  /*TODO: Investigar como hacer lo de pasar por un div y remarcar toda la fila*/
   background: #455f6b;
 }
 .headerTable > div,
