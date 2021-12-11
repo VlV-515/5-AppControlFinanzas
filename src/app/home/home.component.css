@@ -6,10 +6,9 @@
   border-radius: 5px;
   background: rgb(46, 46, 46);
 }
-.header {
+header {
   padding: 1rem;
 }
-
 .title {
   margin: 1rem 0 1.3rem;
   display: flex;
@@ -31,7 +30,6 @@
   margin: 20px auto;
   text-align: center;
   border-radius: 5px;
-
   border: 2px solid #aaa;
 }
 .resumeWrapper {
@@ -58,4 +56,25 @@
 }
 .totalData {
   background: #fff8e5;
+}
+
+.containerTable {
+  text-align: center;
+}
+.selectorTable {
+  display: flex;
+  justify-content: center;
+}
+.selectorTableItem {
+  padding: 2px;
+  margin: 0 2px;
+  border: 1px solid white;
+  border-radius: 5px;
+  background: #797979;
+}
+/* CSS PARA COMPONENTE TABLE */
+.table {
+  margin: 1rem auto;
+  width: 80%;
+  height: 400px;
 }

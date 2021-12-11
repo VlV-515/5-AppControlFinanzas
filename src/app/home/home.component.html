@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="header">
+    <header>
         <div class="title">
             <div class="titleMsg">
                 <h2>Control de finanzas.</h2>
@@ -15,12 +15,22 @@
                 <div class="itemWrapper salidaData">Salida (+)</div>
                 <div class="itemWrapper externoData">Externo (+)</div>
                 <div class="itemWrapper totalData">Total</div>
-                
+
                 <div class="entradaData ">$1500</div>
                 <div class="salidaData ">$1000</div>
                 <div class="externoData ">$100</div>
                 <div class="totalData ">$400</div>
             </div>
         </div>
-    </div>
+    </header>
+    <section class="containerTable">
+        <div class="selectorTable">
+            <div class="selectorTableItem">Entrada</div>
+            <div class="selectorTableItem">Salida</div>
+            <div class="selectorTableItem">Externo</div>
+        </div>
+        <div class="table">
+            <app-table></app-table>
+        </div>
+    </section>
 </div>

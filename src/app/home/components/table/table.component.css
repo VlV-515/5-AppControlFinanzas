@@ -1,0 +1,73 @@
+.containerTable {
+  border-radius: 5px;
+  border: 2px solid #aaa;
+  width: 50%;
+  margin: auto;
+}
+.titleTable {
+  background: #041c32;
+  color: #eee;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+.titleTable > h1 {
+}
+.headerTable > div {
+  background: #04293a;
+  color: #eee;
+}
+.lineTable > div {
+  background: #064663;
+  color: #eee;
+}
+.lineTable > div:hover {
+  /*TODO: Investigar como hacer lo de pasar por un div y remarcar toda la fila*/
+  background: #455f6b;
+}
+.headerTable > div,
+.lineTable > div {
+  border: 2px solid #aaa;
+  padding: 0.5rem;
+}
+.headerTable,
+.lineTable {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr;
+}
+.editBtn,
+.deleteBtn,
+.addBtn {
+  margin: 2px;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+.editBtn {
+  background: #ecb365;
+}
+.editBtn:hover {
+  background: rgb(176, 107, 4);
+}
+.editBtn:active {
+  background: rgb(245, 229, 187);
+}
+
+.deleteBtn {
+  background: #dd4a48;
+}
+.deleteBtn:hover {
+  background: #a90300;
+}
+.deleteBtn:active {
+  background: #e2a5a4;
+}
+.addBtn {
+  background: #4e9f3d;
+}
+.addBtn:hover {
+  background: #116700;
+}
+.addBtn:active {
+  background: #4e9f3d;
+}
