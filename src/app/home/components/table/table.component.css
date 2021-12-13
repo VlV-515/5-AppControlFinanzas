@@ -3,7 +3,7 @@
 .containerTable {
   border-radius: 5px;
   border: 2px solid #aaa;
-  width: 50%;
+  width: 90%;
   margin: auto;
 }
 .titleTable {
@@ -39,6 +39,7 @@
 .editBtn,
 .deleteBtn,
 .addBtn {
+  height: 30px;
   margin: 2px;
   border-radius: 4px;
   font-weight: bold;

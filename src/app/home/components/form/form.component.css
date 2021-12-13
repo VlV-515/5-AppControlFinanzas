@@ -1,0 +1,45 @@
+form {
+  background: #04293a;
+  border-radius: 10px;
+  width: 40vh;
+  margin: 100px auto;
+  padding: 20px;
+  text-align: center;
+}
+h2 {
+    color: #eee;
+}
+div {
+  margin: 5px;
+  padding: 10px;
+  border-radius: 10px;
+}
+label {
+  display: block;
+  color: #eee;
+  background: transparent;
+}
+input,
+select {
+  text-align: center;
+  border-radius: 4px;
+  color: #ecb365;
+  background: transparent;
+  border-bottom: 2px #064635 solid;
+  outline: none;
+}
+button {
+  border-radius: 10px;
+  height: 2rem;
+  background: transparent;
+  border: 4px #064635 solid;
+  color: #eee;
+}
+input[name="description"] {
+}
+.separator {
+  border: 3px white solid;
+  border-radius: 10px;
+  width: 75%;
+  margin: auto;
+}
