@@ -34,6 +34,7 @@ button {
   background: transparent;
   border: 4px #064635 solid;
   color: #eee;
+  cursor: pointer;
 }
 input[name="description"] {
 }
