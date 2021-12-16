@@ -1,4 +1,4 @@
-import { HomeInt } from './../../interfaces/home.interface';
+import { DataInt } from './../../interfaces/home.interface';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
@@ -22,11 +22,10 @@ export class FormComponent implements OnInit {
       quant: ['999'],
       description: ['Tienda'],
       date: ['1990-12-21'],
-      category: [0],
     });
   }
 
-  btnSave(form:HomeInt): void {
+  btnSave(form:DataInt): void {
     console.log('Funciono');
     console.log(form);
   }

@@ -15,13 +15,6 @@
             <label for="date">Fecha</label>
             <input required name="date" formControlName="date" type="date">
         </div>
-        <div class="">
-            <label for="category">Categoria</label>
-            <select required name="category" formControlName="category">
-                <option value="0">Selecciona una opcion</option>
-                <option value="casa">Casa</option>
-            </select>
-        </div>
     </div>
     <div class="">
         <button type="submit" [disabled]="!formData.valid">

@@ -1,6 +1,5 @@
-export interface HomeInt {
+export interface DataInt {
   quant: number;
   description: string;
   date: string;
-  category: string;
 }
