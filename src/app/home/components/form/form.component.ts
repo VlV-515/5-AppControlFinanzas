@@ -1,5 +1,5 @@
 import { DataInt } from './../../interfaces/home.interface';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
@@ -10,6 +10,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class FormComponent implements OnInit {
   formData!: FormGroup;
   titleForm: string = 'Titulo Form';
+  @Output() stateSection = new EventEmitter<boolean>();
 
   constructor(public fb: FormBuilder) {}
 
@@ -25,8 +26,11 @@ export class FormComponent implements OnInit {
     });
   }
 
-  btnSave(form:DataInt): void {
+  btnSave(form: DataInt): void {
     console.log('Funciono');
     console.log(form);
+  }
+  btnCancel(): void {
+    this.stateSection.emit(false);
   }
 }

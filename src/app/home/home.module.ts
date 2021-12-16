@@ -20,6 +20,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HomeRoutingModule,
     ReactiveFormsModule,
     FormsModule
+  ],
+  exports:[
+    TableComponent
   ]
 })
 export class HomeModule { }

@@ -2,7 +2,7 @@
     <div class="titleTable">
         <span></span>
         <h1>{{titleTable}}</h1>
-        <button class="addBtn">[+]</button>
+        <button class="addBtn" (click)="addBtn()">[+]</button>
     </div>
     <div class="headerTable">
         <div class="quant">
@@ -18,7 +18,7 @@
             <h3>Accion</h3>
         </div>
     </div>
-    <ng-form *ngFor="let data of dataTable; let i=index">
+    <ng-container *ngFor="let data of dataTable; let i=index">
         <div class="lineTable">
             <div class="quant">{{data.quant|currency}}</div>
             <div class="description">{{data.description}}</div>
@@ -28,5 +28,5 @@
                 <button class="deleteBtn">Eliminar</button>
             </div>
         </div>
-    </ng-form>
+    </ng-container>
 </div>

@@ -49,8 +49,10 @@ export class HomeComponent implements OnInit {
   inData!: DataInt[];
   outData!: DataInt[];
   otherData!: DataInt[];
+
   titleTable: string = 'Titulo de la tabla';
   dataTable!: DataInt[];
+  stateForm: boolean = false;
   constructor() {}
 
   ngOnInit(): void {
@@ -60,5 +62,9 @@ export class HomeComponent implements OnInit {
   fillInData(): void {
     /* TODO: Service */
     this.dataTable = this.entradaDataMock;
+  }
+  /* Cambia el state del form, cuando lo recibe del evento */
+  changeStateForm(state: boolean): void {
+    this.stateForm = state;
   }
 }
