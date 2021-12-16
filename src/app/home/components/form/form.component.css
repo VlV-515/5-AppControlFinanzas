@@ -19,14 +19,16 @@ label {
   color: #eee;
   background: transparent;
 }
-input,
-select {
+input {
   text-align: center;
   border-radius: 4px;
   color: #ecb365;
   background: transparent;
   border-bottom: 2px #064635 solid;
   outline: none;
+}
+input[type="date"] {
+  cursor: pointer;
 }
 button {
   border-radius: 10px;
