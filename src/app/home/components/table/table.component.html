@@ -24,8 +24,8 @@
             <div class="description">{{data.description}}</div>
             <div class="date">{{data.date}}</div>
             <div class="action">
-                <button class="editBtn">Editar</button>
-                <button class="deleteBtn">Eliminar</button>
+                <button class="editBtn" (click)="editBtn(data,i)">Editar</button>
+                <button class="deleteBtn" (click)="deleteBtn(data,i)">Eliminar</button>
             </div>
         </div>
     </ng-container>

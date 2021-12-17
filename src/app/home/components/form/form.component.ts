@@ -1,5 +1,5 @@
 import { DataInt } from './../../interfaces/home.interface';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
@@ -9,7 +9,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class FormComponent implements OnInit {
   formData!: FormGroup;
-  titleForm: string = 'Titulo Form';
+  @Input() titleForm: string = 'Titulo Form';
+  @Input() dataForm!: DataInt[];
   @Output() stateSection = new EventEmitter<boolean>();
 
   constructor(public fb: FormBuilder) {}

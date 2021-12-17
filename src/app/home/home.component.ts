@@ -50,21 +50,63 @@ export class HomeComponent implements OnInit {
   outData!: DataInt[];
   otherData!: DataInt[];
 
-  titleTable: string = 'Titulo de la tabla';
+  /* [[1->Entrada]]-[[2->Salida]]-[[3->Externo]] */
+  stateTable: number = 1;
+  titleTable!: string;
   dataTable!: DataInt[];
   stateForm: boolean = false;
   constructor() {}
 
   ngOnInit(): void {
-    this.fillInData();
+    this.getFillDataIn();
   }
+  /* 
 
-  fillInData(): void {
+  *
+  *
+  *
+  *
+  *
+
+  */
+  getFillDataIn(): void {
     /* TODO: Service */
     this.dataTable = this.entradaDataMock;
+    this.titleTable = 'Entrada';
   }
+  getFillDataOut(): void {
+    /* TODO: Service */
+    this.dataTable = this.salidaDataMock;
+    this.titleTable = 'Salida';
+  }
+  getFillDataOther(): void {
+    /* TODO: Service */
+    this.dataTable = this.externoDataMock;
+    this.titleTable = 'Externo';
+  }
+  /* 
+
+  *
+  *
+  *
+  *
+  *
+
+  */
   /* Cambia el state del form, cuando lo recibe del evento */
-  changeStateForm(state: boolean): void {
+  changeFormState(state: boolean): void {
     this.stateForm = state;
+  }
+  /* Recibe que tablaa debe mostrar y ajusta los datos */
+  /* [[1->Entrada]]-[[2->Salida]]-[[3->Externo]] */
+  changeTableSection(selection: number): void {
+    this.stateTable = selection;
+    this.changeTableData(selection);
+  }
+  /* Recibe que data seleccionar */
+  changeTableData(section: number): void {
+    if (section == 1) this.getFillDataIn();
+    if (section == 2) this.getFillDataOut();
+    if (section == 3) this.getFillDataOther();
   }
 }

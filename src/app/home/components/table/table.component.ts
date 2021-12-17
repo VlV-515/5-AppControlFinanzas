@@ -19,4 +19,11 @@ export class TableComponent implements OnInit {
   addBtn(): void {
     this.stateSection.emit(true);
   }
+  editBtn(data: DataInt, index: number): void {
+    console.log(data);
+  }
+  deleteBtn(data: DataInt, index: number): void {
+    console.log(data);
+    this.dataTable.splice(index, 1);
+  }
 }

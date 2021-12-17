@@ -63,14 +63,21 @@ header {
   display: flex;
   justify-content: center;
 }
-.selectorTableItem {
-  padding: 2px;
-  margin: 0 2px;
+
+.selectorTable > button {
+  padding: 0.3rem 1rem;
+  margin: 0 0.3rem;
   border: 1px solid white;
-  border-radius: 5px;
-  background: #797979;
+  border-radius: 20px;
+  cursor: pointer;
+  background: #041c32;
+  color: #eee;
 }
-/* CSS PARA COMPONENTE TABLE */
+
+.selectorTable > .btnSelect {
+  background: #094883;
+}
+
 .table {
   margin: 1rem auto;
   width: 80%;

@@ -24,18 +24,29 @@
         </div>
     </header>
     <section class="containerTable">
-        <div class="selectorTable">
-            <div class="selectorTableItem">Entrada</div>
-            <div class="selectorTableItem">Salida</div>
-            <div class="selectorTableItem">Externo</div>
-        </div>
+        <ng-container *ngIf="!stateForm">
+            <div class="selectorTable">
+                <button (click)="changeTableSection(1)" type="button"
+                    [ngClass]="stateTable==1?'btnSelect':''">Entrada</button>
+                <button (click)="changeTableSection(2)" type="button"
+                    [ngClass]="stateTable==2?'btnSelect':''">Salida</button>
+                <button (click)="changeTableSection(3)" type="button"
+                    [ngClass]="stateTable==3?'btnSelect':''">Externo</button>
+            </div>
+        </ng-container>
         <div class="table">
             <ng-container *ngIf="!stateForm; else form">
-                <app-table [titleTable]="titleTable" [dataTable]="dataTable" (stateSection)="changeStateForm($event)">
+                <app-table 
+                [titleTable]="titleTable" 
+                [dataTable]="dataTable" 
+                (stateSection)="changeFormState($event)">
                 </app-table>
             </ng-container>
             <ng-template #form>
-                <app-form (stateSection)="changeStateForm($event)"></app-form>
+                <app-form 
+                (stateSection)="changeFormState($event)" 
+                [titleForm]="titleTable">
+            </app-form>
             </ng-template>
         </div>
     </section>
