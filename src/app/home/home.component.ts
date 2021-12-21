@@ -1,5 +1,6 @@
 import { DataInt } from './interfaces/home.interface';
 import { Component, OnInit } from '@angular/core';
+import { environment } from '../../environments/environment.prod';
 
 @Component({
   selector: 'app-home',
@@ -7,51 +8,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  entradaDataMock: DataInt[] = [
-    {
-      quant: 537,
-      description: 'Entrada importante 11',
-      date: '1990-01-21',
-    },
-    {
-      quant: 973,
-      description: 'Entrada importante 22',
-      date: '1990-02-22',
-    },
-  ];
-  salidaDataMock: DataInt[] = [
-    {
-      quant: 537,
-      description: 'Salida importante 11',
-      date: '1990-01-21',
-    },
-    {
-      quant: 973,
-      description: 'Salida importante 22',
-      date: '1990-02-22',
-    },
-  ];
-  externoDataMock: DataInt[] = [
-    {
-      quant: 537,
-      description: 'Externo importante 11',
-      date: '1990-01-21',
-    },
-    {
-      quant: 973,
-      description: 'Externo importante 22',
-      date: '1990-02-22',
-    },
-  ];
-  /* ============================== */
-  /* ============================== */
-  /* ============================== */
   inData!: DataInt[];
   outData!: DataInt[];
   otherData!: DataInt[];
 
+  inTotal: number = 0;
+  outTotal: number = 0;
+  otherTotal: number = 0;
+  resumeTotal: number = 0;
+
   /* [[1->Entrada]]-[[2->Salida]]-[[3->Externo]] */
-  stateTable: number = 1;
+  sectionTable: number = 2;
   titleTable!: string;
   dataTable!: DataInt[];
   stateForm: boolean = false;
@@ -60,55 +27,79 @@ export class HomeComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.getFillDataIn();
+    this.fillData();
+    this.calculateResumeTotal();
+    this.selectDataOut();
   }
-  /* 
-
-  *
-  *
-  *
-  *
-  *
-
+  /*
+    !Llenado de arrays
   */
-  getFillDataIn(): void {
-    /* TODO: Service */
-    this.dataTable = this.entradaDataMock;
+  fillData(): void {
+    this.fillInData();
+    this.fillOutData();
+    this.fillOtherData();
+  }
+  private fillInData(): void {
+    /* Obtebemos la respuesta del service */
+    this.inData = environment.entradaDataMock;
+  }
+  private fillOutData(): void {
+    /* Obtebemos la respuesta del service */
+    this.outData = environment.salidaDataMock;
+  }
+  private fillOtherData(): void {
+    /* Obtebemos la respuesta del service */
+    this.otherData = environment.externoDataMock;
+  }
+  /*
+    !Seleccionado de data
+   */
+  private selectDataIn(): void {
+    this.dataTable = this.inData;
     this.titleTable = 'Entrada';
   }
-  getFillDataOut(): void {
-    /* TODO: Service */
-    this.dataTable = this.salidaDataMock;
+  private selectDataOut(): void {
+    this.dataTable = this.outData;
     this.titleTable = 'Salida';
   }
-  getFillDataOther(): void {
-    /* TODO: Service */
-    this.dataTable = this.externoDataMock;
+  private selectDataOther(): void {
+    this.dataTable = this.otherData;
     this.titleTable = 'Externo';
   }
   /* 
-
-  *
-  *
-  *
-  *
-  *
-
+    !Controles de Resumen
+  */
+  //Retorna el valor total del array que le asignen
+  private calculateTotal(arr: DataInt[]): number {
+    return arr.reduce((acc, el: DataInt) => (acc += el.quant), 0);
+  }
+  //Calcula los valores totales
+  private calculateResumeTotal(): void {
+    this.inTotal = this.calculateTotal(this.inData);
+    this.outTotal = this.calculateTotal(this.outData);
+    this.otherTotal = this.calculateTotal(this.otherData);
+    this.resumeTotal = this.inTotal - this.outTotal - this.otherTotal;
+  }
+  /*
+    !Controles de tabla
+  */
+  /* Recibe que data seleccionar */
+  private changeDataInTable(section: number): void {
+    if (section == 1) this.selectDataIn();
+    if (section == 2) this.selectDataOut();
+    if (section == 3) this.selectDataOther();
+  }
+  /*
+    !Controles de form
   */
   /* Cambia el state del form, cuando lo recibe del evento */
   changeFormState(state: boolean): void {
     this.stateForm = state;
   }
-  /* Recibe que tablaa debe mostrar y ajusta los datos */
+  /* Recibe que tabla debe mostrar y ajusta los datos */
   /* [[1->Entrada]]-[[2->Salida]]-[[3->Externo]] */
   changeTableSection(selection: number): void {
-    this.stateTable = selection;
-    this.changeTableData(selection);
-  }
-  /* Recibe que data seleccionar */
-  changeTableData(section: number): void {
-    if (section == 1) this.getFillDataIn();
-    if (section == 2) this.getFillDataOut();
-    if (section == 3) this.getFillDataOther();
+    this.sectionTable = selection;
+    this.changeDataInTable(selection);
   }
 }

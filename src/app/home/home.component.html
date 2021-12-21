@@ -16,10 +16,10 @@
                 <div class="itemWrapper externoData">Externo (+)</div>
                 <div class="itemWrapper totalData">Total</div>
 
-                <div class="entradaData ">$1500</div>
-                <div class="salidaData ">$1000</div>
-                <div class="externoData ">$100</div>
-                <div class="totalData ">$400</div>
+                <div class="entradaData ">{{inTotal|currency:'MXN':'symbol'}}</div>
+                <div class="salidaData ">{{outTotal|currency:'MXN':'symbol'}}</div>
+                <div class="externoData ">{{otherTotal|currency:'MXN':'symbol'}}</div>
+                <div class="totalData ">{{resumeTotal|currency:'MXN':'symbol'}}</div>
             </div>
         </div>
     </header>
@@ -27,11 +27,11 @@
         <ng-container *ngIf="!stateForm">
             <div class="selectorTable">
                 <button (click)="changeTableSection(1)" type="button"
-                    [ngClass]="stateTable==1?'btnSelect':''">Entrada</button>
+                    [ngClass]="sectionTable==1?'btnSelect':''">Entrada</button>
                 <button (click)="changeTableSection(2)" type="button"
-                    [ngClass]="stateTable==2?'btnSelect':''">Salida</button>
+                    [ngClass]="sectionTable==2?'btnSelect':''">Salida</button>
                 <button (click)="changeTableSection(3)" type="button"
-                    [ngClass]="stateTable==3?'btnSelect':''">Externo</button>
+                    [ngClass]="sectionTable==3?'btnSelect':''">Externo</button>
             </div>
         </ng-container>
         <div class="table">
