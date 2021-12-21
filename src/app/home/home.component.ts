@@ -55,6 +55,8 @@ export class HomeComponent implements OnInit {
   titleTable!: string;
   dataTable!: DataInt[];
   stateForm: boolean = false;
+  todayDate: Date = new Date();
+  formatDate: string = 'EEEE, d MMMM Y - hh:mm a';
   constructor() {}
 
   ngOnInit(): void {

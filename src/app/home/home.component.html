@@ -5,7 +5,7 @@
                 <h2>Control de finanzas.</h2>
             </div>
             <div class="titleDate">
-                <h5 class="dateTime">Lunes, 8 Diciembre 2021 - 02:33 PM</h5>
+                <h5 class="dateTime">{{todayDate|date:formatDate|titlecase}}</h5>
             </div>
         </div>
         <div class="gridContainer">
@@ -36,17 +36,12 @@
         </ng-container>
         <div class="table">
             <ng-container *ngIf="!stateForm; else form">
-                <app-table 
-                [titleTable]="titleTable" 
-                [dataTable]="dataTable" 
-                (stateSection)="changeFormState($event)">
+                <app-table [titleTable]="titleTable" [dataTable]="dataTable" (stateSection)="changeFormState($event)">
                 </app-table>
             </ng-container>
             <ng-template #form>
-                <app-form 
-                (stateSection)="changeFormState($event)" 
-                [titleForm]="titleTable">
-            </app-form>
+                <app-form (stateSection)="changeFormState($event)" [titleForm]="titleTable">
+                </app-form>
             </ng-template>
         </div>
     </section>
