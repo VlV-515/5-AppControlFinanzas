@@ -36,13 +36,23 @@
         </ng-container>
         <div class="table">
             <ng-container *ngIf="!stateForm; else form">
-                <app-table [titleTable]="titleTable" [dataTable]="dataTable" (stateSection)="changeFormState($event)">
+                <app-table 
+                [titleTable]="titleTable" 
+                [dataTable]="dataTable" 
+                (stateSection)="changeFormState($event)"
+                (dataEdit)="editDataTable($event)"
+                >
                 </app-table>
             </ng-container>
-            <ng-template #form>
-                <app-form (stateSection)="changeFormState($event)" [titleForm]="titleTable">
-                </app-form>
-            </ng-template>
         </div>
+        <ng-template #form>
+            <app-form 
+            (stateForm)="changeFormState($event)" 
+            (dataOutputForm)="saveDataForm($event)"
+            [dataInputForm]="dataForm"
+            [titleForm]="titleTable"
+            >
+            </app-form>
+        </ng-template>
     </section>
 </div>

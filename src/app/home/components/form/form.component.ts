@@ -8,30 +8,66 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./form.component.css'],
 })
 export class FormComponent implements OnInit {
+  date: Date = new Date();
+  today: string =
+    this.date.getFullYear() +
+    '-' +
+    (this.date.getMonth() + 1) +
+    '-' +
+    this.date.getDate();
   formData!: FormGroup;
-  @Input() titleForm: string = 'Titulo Form';
-  @Input() dataForm!: DataInt[];
-  @Output() stateSection = new EventEmitter<boolean>();
+  @Input() titleForm!: string;
+  @Output() stateForm = new EventEmitter<boolean>();
+  @Input() dataInputForm?: DataInt;
+  @Output() dataOutputForm = new EventEmitter<DataInt>();
 
-  constructor(public fb: FormBuilder) {}
+  constructor(public fb: FormBuilder) {
+    this.createFormNew();
+  }
 
   ngOnInit(): void {
-    this.createFormNew();
+    //Si dataInputForm esta vacia, es nueva, de lo contrario crea uno con la data
+    if (this.dataInputForm != undefined)
+      this.createFormEdit(this.dataInputForm);
   }
 
   createFormNew(): void {
     this.formData = this.fb.group({
-      quant: ['999'],
-      description: ['Tienda'],
-      date: ['1990-12-21'],
+      quant: [''],
+      description: [''],
+      date: [this.today],
     });
   }
-
+  createFormEdit(data: DataInt): void {
+    this.formData.setValue({
+      quant: [data.quant],
+      description: [data.description],
+      date: [data.date],
+    });
+  }
+  cleanForm(): void {
+    this.formData.setValue({
+      quant: [],
+      description: [],
+      date: [this.today],
+    });
+    this.dataInputForm = undefined;
+  }
   btnSave(form: DataInt): void {
-    console.log('Funciono');
-    console.log(form);
+    //Emite la data a guardar
+    let data;
+    /* 
+    TODO: Verifica si existe el id, de ser asi lo asigna y lo emite, si no, solo emite
+    */
+    {
+      data = form;
+      this.dataOutputForm.emit(data);
+      this.stateForm.emit(false);
+    }
+    this.cleanForm();
   }
   btnCancel(): void {
-    this.stateSection.emit(false);
+    this.cleanForm();
+    this.stateForm.emit(false);
   }
 }

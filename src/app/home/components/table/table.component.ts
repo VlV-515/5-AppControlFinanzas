@@ -10,20 +10,21 @@ export class TableComponent implements OnInit {
   @Input() titleTable!: string;
   @Input() dataTable!: DataInt[];
   @Output() stateSection = new EventEmitter<boolean>();
+  @Output() dataEdit = new EventEmitter<DataInt>();
 
   constructor() {}
 
-  ngOnInit(): void {
-    console.log(this.dataTable);
-  }
+  ngOnInit(): void {}
   addBtn(): void {
     this.stateSection.emit(true);
   }
-  editBtn(data: DataInt, index: number): void {
-    console.log(data);
+  editBtn(data: DataInt): void {
+    this.dataEdit.emit(data);
   }
   deleteBtn(data: DataInt, index: number): void {
-    console.log(data);
+    /* 
+      TODO: Service Delete y dependiendo hace splice
+    */
     this.dataTable.splice(index, 1);
   }
 }
