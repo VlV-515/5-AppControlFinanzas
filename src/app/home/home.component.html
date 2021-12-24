@@ -19,7 +19,7 @@
                 <div class="entradaData ">{{inTotal|currency:'MXN':'symbol'}}</div>
                 <div class="salidaData ">{{outTotal|currency:'MXN':'symbol'}}</div>
                 <div class="externoData ">{{otherTotal|currency:'MXN':'symbol'}}</div>
-                <div class="totalData ">{{resumeTotal|currency:'MXN':'symbol'}}</div>
+                <div class="totalData ">{{calculateResumeTotal(inTotal,outTotal,otherTotal)|currency:'MXN':'symbol'}}</div>
             </div>
         </div>
     </header>
@@ -49,7 +49,7 @@
             <app-form 
             (stateForm)="changeFormState($event)" 
             (dataOutputForm)="saveDataForm($event)"
-            [dataInputForm]="dataForm"
+            [dataInputForm]="dataForm" 
             [titleForm]="titleTable"
             >
             </app-form>

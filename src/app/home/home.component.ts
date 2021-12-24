@@ -1,6 +1,6 @@
+import { HomeService } from './services/home.service';
 import { DataInt } from './interfaces/home.interface';
-import { Component } from '@angular/core';
-import { environment } from '../../environments/environment.prod';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +19,7 @@ export class HomeComponent {
 
   /* [[1->Entrada]]-[[2->Salida]]-[[3->Externo]] */
   sectionTable: number = 2;
-  titleTable!: string;
+  titleTable: string = 'Selecciona una sección';
   dataTable!: DataInt[];
   /*[[true -> ViewForm]]*/
   dataForm?: DataInt;
@@ -27,14 +27,10 @@ export class HomeComponent {
 
   todayDate: Date = new Date();
   formatDate: string = 'EEEE, d MMMM Y - hh:mm a';
-  constructor() {
-    //Llena los array
+  constructor(private homeSvc: HomeService) {
     this.fillData();
-    //Calcula los totales
-    this.calculateResumeTotal();
-    //Selecciona la tabla 'Salida' como default para mostrar
-    this.selectDataOut();
   }
+  ngOnInit(): void {}
   /*
     !Llenado de arrays
   */
@@ -45,15 +41,24 @@ export class HomeComponent {
   }
   private fillInData(): void {
     // Obtebemos la respuesta del service
-    this.inData = environment.entradaDataMock;
+    this.homeSvc.getAll('in').subscribe((data) => {
+      this.inData = data;
+      this.inTotal = this.calculateTotal(data);
+    });
   }
   private fillOutData(): void {
     // Obtebemos la respuesta del service
-    this.outData = environment.salidaDataMock;
+    this.homeSvc.getAll('out').subscribe((data) => {
+      this.outData = data;
+      this.outTotal = this.calculateTotal(data);
+    });
   }
   private fillOtherData(): void {
     // Obtebemos la respuesta del service
-    this.otherData = environment.externoDataMock;
+    this.homeSvc.getAll('other').subscribe((data) => {
+      this.otherData = data;
+      this.otherTotal = this.calculateTotal(data);
+    });
   }
   /*
     !Seleccionado de data
@@ -77,12 +82,8 @@ export class HomeComponent {
   private calculateTotal(arr: DataInt[]): number {
     return arr.reduce((acc, el: DataInt) => (acc += el.quant), 0);
   }
-  //Calcula los valores totales
-  private calculateResumeTotal(): void {
-    this.inTotal = this.calculateTotal(this.inData);
-    this.outTotal = this.calculateTotal(this.outData);
-    this.otherTotal = this.calculateTotal(this.otherData);
-    this.resumeTotal = this.inTotal - this.outTotal - this.otherTotal;
+  calculateResumeTotal(n1: number, n2: number, n3: number): number {
+    return n1 - n2 - n3;
   }
   /*
     !Controles de tabla
@@ -117,6 +118,5 @@ export class HomeComponent {
     /* 
     TODO:Verifica si tiene ID es edit si no es uno new.
     */
-   
   }
 }
