@@ -1,6 +1,6 @@
 import { HomeService } from './services/home.service';
 import { DataInt } from './interfaces/home.interface';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +19,7 @@ export class HomeComponent {
 
   /* [[1->Entrada]]-[[2->Salida]]-[[3->Externo]] */
   sectionTable: number = 2;
-  titleTable: string = 'Selecciona una sección';
+  titleTable: string = 'Selecciona una categoría';
   dataTable!: DataInt[];
   /*[[true -> ViewForm]]*/
   dataForm?: DataInt;
@@ -99,6 +99,10 @@ export class HomeComponent {
     this.dataForm = data;
     this.stateForm = true;
   }
+  deleteDataTable(data: DataInt) {
+    console.log('Data a eliminar');
+    console.log(data);
+  }
   /*
     !Controles de form
   */
@@ -115,8 +119,11 @@ export class HomeComponent {
   }
   //Recibe la data del form a guardar, revisa el estado y entonces selecciona el service
   saveDataForm(dataForm: DataInt): void {
-    /* 
-    TODO:Verifica si tiene ID es edit si no es uno new.
-    */
+    //*Verifica si tiene ID es edit si no es uno new.
+    if (dataForm._id) {
+      console.log('Es un edit');
+    } else {
+      console.log('Es uno nuevo');
+    }
   }
 }

@@ -40,9 +40,9 @@ export class FormComponent implements OnInit {
   }
   createFormEdit(data: DataInt): void {
     this.formData.setValue({
-      quant: [data.quant],
-      description: [data.description],
-      date: [data.date],
+      quant: data.quant,
+      description: data.description,
+      date: data.date,
     });
   }
   cleanForm(): void {
@@ -54,16 +54,13 @@ export class FormComponent implements OnInit {
     this.dataInputForm = undefined;
   }
   btnSave(form: DataInt): void {
-    //Emite la data a guardar
-    let data;
-    /* 
-    TODO: Verifica si existe el id, de ser asi lo asigna y lo emite, si no, solo emite
-    */
-    {
-      data = form;
-      this.dataOutputForm.emit(data);
-      this.stateForm.emit(false);
+    //TODO: Verifica si existe el id, de ser asi lo asigna y lo emite, si no, solo emite
+    let data = form;
+    if (this.dataInputForm != undefined) {
+      data._id = this.dataInputForm._id;
     }
+    this.dataOutputForm.emit(form);
+    this.stateForm.emit(false);
     this.cleanForm();
   }
   btnCancel(): void {

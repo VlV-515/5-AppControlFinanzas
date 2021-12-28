@@ -11,6 +11,7 @@ export class TableComponent implements OnInit {
   @Input() dataTable!: DataInt[];
   @Output() stateSection = new EventEmitter<boolean>();
   @Output() dataEdit = new EventEmitter<DataInt>();
+  @Output() dataDelete = new EventEmitter<DataInt>();
 
   constructor() {}
 
@@ -21,10 +22,8 @@ export class TableComponent implements OnInit {
   editBtn(data: DataInt): void {
     this.dataEdit.emit(data);
   }
-  deleteBtn(data: DataInt, index: number): void {
-    /* 
-      TODO: Service Delete y dependiendo hace splice
-    */
-    this.dataTable.splice(index, 1);
+  deleteBtn(data: DataInt): void {
+    //Mandamos tanto la data como el index para que el componente se encargue
+    this.dataDelete.emit(data);
   }
 }

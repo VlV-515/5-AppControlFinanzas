@@ -18,14 +18,14 @@
             <h3>Accion</h3>
         </div>
     </div>
-    <ng-container *ngFor="let data of dataTable; let i=index">
+    <ng-container *ngFor="let data of dataTable">
         <div class="lineTable">
             <div class="quant">{{data.quant|currency:'MXN':'symbol'}}</div>
             <div class="description">{{data.description}}</div>
             <div class="date">{{data.date}}</div>
             <div class="action">
                 <button class="editBtn" (click)="editBtn(data)">Editar</button>
-                <button class="deleteBtn" (click)="deleteBtn(data,i)">Eliminar</button>
+                <button class="deleteBtn" (click)="deleteBtn(data)">Eliminar</button>
             </div>
         </div>
     </ng-container>
