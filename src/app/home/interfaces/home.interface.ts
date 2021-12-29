@@ -1,6 +1,9 @@
 export interface DataInt {
-  _id?: number;
+  _id?: string;
   quant: number;
   description: string;
   date: string;
+}
+export interface RespInt {
+  msg: string;
 }

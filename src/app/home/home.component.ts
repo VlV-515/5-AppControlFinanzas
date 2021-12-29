@@ -1,5 +1,5 @@
 import { HomeService } from './services/home.service';
-import { DataInt } from './interfaces/home.interface';
+import { DataInt, RespInt } from './interfaces/home.interface';
 import { Component } from '@angular/core';
 
 @Component({
@@ -99,9 +99,15 @@ export class HomeComponent {
     this.dataForm = data;
     this.stateForm = true;
   }
-  deleteDataTable(data: DataInt) {
-    console.log('Data a eliminar');
-    console.log(data);
+  deleteDataTable(data: DataInt): void {
+    if (data._id) {
+      this.homeSvc
+        .deleteData(data._id, this.getSectionName())
+        .subscribe((res: RespInt) => {
+          if (res.msg == 'error') return console.log('Error eliminando');
+          return console.log('Eliminado con exito');
+        });
+    }
   }
   /*
     !Controles de form
@@ -125,5 +131,14 @@ export class HomeComponent {
     } else {
       console.log('Es uno nuevo');
     }
+  }
+  /* 
+    !Funciones Globales
+  */
+  private getSectionName(): string {
+    if (this.sectionTable == 1) return 'in';
+    if (this.sectionTable == 1) return 'out';
+    if (this.sectionTable == 1) return 'other';
+    return '';
   }
 }

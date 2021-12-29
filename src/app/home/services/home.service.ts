@@ -1,9 +1,9 @@
 import { environment } from './../../../environments/environment.prod';
-import { DataInt } from './../interfaces/home.interface';
+import { DataInt, RespInt } from './../interfaces/home.interface';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class HomeService {
@@ -24,5 +24,22 @@ export class HomeService {
           }))
         )
       );
+  }
+  newData(data: DataInt, section: string): Observable<RespInt> {
+    return this.httpClient.post<RespInt>(
+      `${environment.URL_API}/${section}/new${section.toUpperCase()}`,
+      data
+    );
+  }
+  editData(data: DataInt, section: string): Observable<RespInt> {
+    return this.httpClient.put<RespInt>(
+      `${environment.URL_API}/${section}/edit${section.toUpperCase()}/${data._id}`,
+      data
+    );
+  }
+  deleteData(id: string, section: string): Observable<RespInt> {
+    return this.httpClient.delete<RespInt>(
+      `${environment.URL_API}/${section}/delete${section.toUpperCase()}/${id}`
+    );
   }
 }
