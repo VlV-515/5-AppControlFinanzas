@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
+//!TODO:Fijate en los fill table cuando hagas algun cambio.
 export class HomeComponent {
   inData!: DataInt[];
   outData!: DataInt[];
@@ -43,6 +44,7 @@ export class HomeComponent {
     // Obtebemos la respuesta del service
     this.homeSvc.getAll('in').subscribe((data) => {
       this.inData = data;
+      this.dataTable = data;
       this.inTotal = this.calculateTotal(data);
     });
   }
@@ -50,6 +52,7 @@ export class HomeComponent {
     // Obtebemos la respuesta del service
     this.homeSvc.getAll('out').subscribe((data) => {
       this.outData = data;
+      this.dataTable = data;
       this.outTotal = this.calculateTotal(data);
     });
   }
@@ -57,6 +60,7 @@ export class HomeComponent {
     // Obtebemos la respuesta del service
     this.homeSvc.getAll('other').subscribe((data) => {
       this.otherData = data;
+      this.dataTable = data;
       this.otherTotal = this.calculateTotal(data);
     });
   }
@@ -128,17 +132,41 @@ export class HomeComponent {
     //*Verifica si tiene ID es edit si no es uno new.
     if (dataForm._id) {
       console.log('Es un edit');
+      this.saveEditData(dataForm);
     } else {
       console.log('Es uno nuevo');
+      this.saveNewData(dataForm);
     }
   }
   /* 
-    !Funciones Globales
+    !Funciones 
   */
   private getSectionName(): string {
     if (this.sectionTable == 1) return 'in';
-    if (this.sectionTable == 1) return 'out';
-    if (this.sectionTable == 1) return 'other';
+    if (this.sectionTable == 2) return 'out';
+    if (this.sectionTable == 3) return 'other';
     return '';
+  }
+
+  private saveNewData(data: DataInt): void {
+    console.log(this.sectionTable);
+    this.homeSvc
+      .newData(data, this.getSectionName())
+      .subscribe((res: RespInt) => {
+        if (res.msg == 'error') {
+          return console.log('Error agregando uno nuevo');
+        }
+        this.fillOutData()
+        return console.log('Agregado con exito');
+      });
+  }
+
+  private saveEditData(data: DataInt): void {
+    this.homeSvc
+      .editData(data, this.getSectionName())
+      .subscribe((res: RespInt) => {
+        if (res.msg == 'error') return console.log('Error editando');
+        return console.log('Editado con exito');
+      });
   }
 }
