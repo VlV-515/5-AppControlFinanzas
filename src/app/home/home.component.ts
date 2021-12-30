@@ -1,6 +1,7 @@
 import { HomeService } from './services/home.service';
 import { DataInt, RespInt } from './interfaces/home.interface';
 import { Component } from '@angular/core';
+import Swal, { SweetAlertIcon } from 'sweetalert2';
 
 @Component({
   selector: 'app-home',
@@ -108,8 +109,9 @@ export class HomeComponent {
       this.homeSvc
         .deleteData(data._id, this.getSectionName())
         .subscribe((res: RespInt) => {
-          if (res.msg == 'error') return console.log('Error eliminando');
-          return console.log('Eliminado con exito');
+          if (res.msg == 'error')
+            return this.handlerAlert('Error eliminando.', 'error');
+          return this.handlerAlert('Eliminado con exito.', 'success');
         });
     }
   }
@@ -153,11 +155,10 @@ export class HomeComponent {
     this.homeSvc
       .newData(data, this.getSectionName())
       .subscribe((res: RespInt) => {
-        if (res.msg == 'error') {
-          return console.log('Error agregando uno nuevo');
-        }
-        this.fillOutData()
-        return console.log('Agregado con exito');
+        if (res.msg == 'error')
+          return this.handlerAlert('Error agregando.', 'error');
+        this.fillOutData();
+        return this.handlerAlert('Agregado con exito.', 'success');
       });
   }
 
@@ -165,8 +166,19 @@ export class HomeComponent {
     this.homeSvc
       .editData(data, this.getSectionName())
       .subscribe((res: RespInt) => {
-        if (res.msg == 'error') return console.log('Error editando');
-        return console.log('Editado con exito');
+        if (res.msg == 'error')
+          return this.handlerAlert('Error editando.', 'error');
+        return this.handlerAlert('Editado con exito.', 'success');
       });
+  }
+
+  private handlerAlert(text: string, iconName: SweetAlertIcon): void {
+    Swal.fire({
+      position: 'bottom-start',
+      icon: iconName,
+      title: text,
+      showConfirmButton: false,
+      timer: 1500,
+    });
   }
 }

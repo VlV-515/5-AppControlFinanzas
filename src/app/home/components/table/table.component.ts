@@ -1,5 +1,6 @@
 import { DataInt } from './../../interfaces/home.interface';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-table',
@@ -20,10 +21,28 @@ export class TableComponent implements OnInit {
     this.stateSection.emit(true);
   }
   editBtn(data: DataInt): void {
-    this.dataEdit.emit(data);
+    Swal.fire({
+      title: 'Seguro?',
+      text: '¿Realmente quieres editar este registro?',
+      confirmButtonColor: '#ecb365',
+      confirmButtonText: 'Editar',
+      showCancelButton: true,
+      icon: 'warning',
+    }).then((result) => {
+      if (result.isConfirmed) this.dataEdit.emit(data);
+    });
   }
   deleteBtn(data: DataInt): void {
     //Mandamos tanto la data como el index para que el componente se encargue
-    this.dataDelete.emit(data);
+    Swal.fire({
+      title: 'Seguro?',
+      text: '¿Realmente quieres eliminar este registro?',
+      confirmButtonColor: '#9B0000',
+      confirmButtonText: 'Eliminar',
+      showCancelButton: true,
+      icon: 'warning',
+    }).then((result) => {
+      if (result.isConfirmed) this.dataDelete.emit(data);
+    });
   }
 }
