@@ -43,26 +43,41 @@ export class HomeComponent {
   }
   private fillInData(): void {
     // Obtebemos la respuesta del service
-    this.homeSvc.getAll('in').subscribe((data) => {
-      this.inData = data;
-      this.dataTable = data;
-      this.inTotal = this.calculateTotal(data);
+    this.homeSvc.getAll('in').subscribe({
+      next: (data: DataInt[]) => {
+        this.inData = data;
+        this.dataTable = data;
+        this.inTotal = this.calculateTotal(data);
+      },
+      error: (error) => {
+        this.handlerAlert('Fallo comunicación con servidor.', 'error');
+      },
     });
   }
   private fillOutData(): void {
     // Obtebemos la respuesta del service
-    this.homeSvc.getAll('out').subscribe((data) => {
-      this.outData = data;
-      this.dataTable = data;
-      this.outTotal = this.calculateTotal(data);
+    this.homeSvc.getAll('out').subscribe({
+      next: (data: DataInt[]) => {
+        this.outData = data;
+        this.dataTable = data;
+        this.outTotal = this.calculateTotal(data);
+      },
+      error: (error) => {
+        this.handlerAlert('Fallo comunicación con servidor.', 'error');
+      },
     });
   }
   private fillOtherData(): void {
     // Obtebemos la respuesta del service
-    this.homeSvc.getAll('other').subscribe((data) => {
-      this.otherData = data;
-      this.dataTable = data;
-      this.otherTotal = this.calculateTotal(data);
+    this.homeSvc.getAll('other').subscribe({
+      next: (data) => {
+        this.otherData = data;
+        this.dataTable = data;
+        this.otherTotal = this.calculateTotal(data);
+      },
+      error: (error: Error) => {
+        this.handlerAlert('Fallo comunicación con servidor.', 'error');
+      },
     });
   }
   /*
@@ -106,13 +121,16 @@ export class HomeComponent {
   }
   deleteDataTable(data: DataInt): void {
     if (data._id) {
-      this.homeSvc
-        .deleteData(data._id, this.getSectionName())
-        .subscribe((res: RespInt) => {
+      this.homeSvc.deleteData(data._id, this.getSectionName()).subscribe({
+        next: (res: RespInt) => {
           if (res.msg == 'error')
             return this.handlerAlert('Error eliminando.', 'error');
           return this.handlerAlert('Eliminado con exito.', 'success');
-        });
+        },
+        error: (error: Error) => {
+          this.handlerAlert('Fallo comunicación con servidor.', 'error');
+        },
+      });
     }
   }
   /*
@@ -152,24 +170,30 @@ export class HomeComponent {
 
   private saveNewData(data: DataInt): void {
     console.log(this.sectionTable);
-    this.homeSvc
-      .newData(data, this.getSectionName())
-      .subscribe((res: RespInt) => {
+    this.homeSvc.newData(data, this.getSectionName()).subscribe({
+      next: (res: RespInt) => {
         if (res.msg == 'error')
           return this.handlerAlert('Error agregando.', 'error');
         this.fillOutData();
         return this.handlerAlert('Agregado con exito.', 'success');
-      });
+      },
+      error: (error: Error) => {
+        this.handlerAlert('Fallo comunicación con servidor.', 'error');
+      },
+    });
   }
 
   private saveEditData(data: DataInt): void {
-    this.homeSvc
-      .editData(data, this.getSectionName())
-      .subscribe((res: RespInt) => {
+    this.homeSvc.editData(data, this.getSectionName()).subscribe({
+      next: (res: RespInt) => {
         if (res.msg == 'error')
           return this.handlerAlert('Error editando.', 'error');
         return this.handlerAlert('Editado con exito.', 'success');
-      });
+      },
+      error: (error: Error) => {
+        this.handlerAlert('Fallo comunicación con servidor.', 'error');
+      },
+    });
   }
 
   private handlerAlert(text: string, iconName: SweetAlertIcon): void {
