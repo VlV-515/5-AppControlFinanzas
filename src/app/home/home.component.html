@@ -26,24 +26,47 @@
     <section class="containerTable">
         <ng-container *ngIf="!stateForm">
             <div class="selectorTable">
-                <button (click)="changeTableSection(1)" type="button"
+                <button (click)="selectDataInTable(1)" type="button"
                     [ngClass]="sectionTable==1?'btnSelect':''">Entrada</button>
-                <button (click)="changeTableSection(2)" type="button"
+                <button (click)="selectDataInTable(2)" type="button"
                     [ngClass]="sectionTable==2?'btnSelect':''">Salida</button>
-                <button (click)="changeTableSection(3)" type="button"
+                <button (click)="selectDataInTable(3)" type="button"
                     [ngClass]="sectionTable==3?'btnSelect':''">Externo</button>
             </div>
         </ng-container>
         <div class="table">
             <ng-container *ngIf="!stateForm; else form">
-                <app-table 
-                [titleTable]="titleTable" 
-                [dataTable]="dataTable" 
-                (stateSection)="changeFormState($event)"
-                (dataEdit)="editDataTable($event)"
-                (dataDelete)="deleteDataTable($event)"
-                >
-                </app-table>
+                <ng-container *ngIf="sectionTable==1">
+                    <app-table 
+                    [dataTable]="homeSvc.fillIn|async" 
+                    [titleTable]="titleTable" 
+                    (stateSection)="changeFormState($event)"
+                    (dataEdit)="editDataTable($event)"
+                    (dataDelete)="deleteDataTable($event)"
+                    >
+                    </app-table>
+                </ng-container>
+                <ng-container *ngIf="sectionTable==2">
+                    <app-table 
+                    [dataTable]="homeSvc.fillOut|async" 
+                    [titleTable]="titleTable" 
+                    (stateSection)="changeFormState($event)"
+                    (dataEdit)="editDataTable($event)"
+                    (dataDelete)="deleteDataTable($event)"
+                    >
+                    </app-table>
+                </ng-container>
+                <ng-container *ngIf="sectionTable==3">
+                    <app-table 
+                    [dataTable]="homeSvc.fillOther|async" 
+                    [titleTable]="titleTable" 
+                    (stateSection)="changeFormState($event)"
+                    (dataEdit)="editDataTable($event)"
+                    (dataDelete)="deleteDataTable($event)"
+                    >
+                    </app-table>
+                </ng-container>
+                
             </ng-container>
         </div>
         <ng-template #form>

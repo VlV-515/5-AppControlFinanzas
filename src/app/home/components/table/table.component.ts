@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 })
 export class TableComponent implements OnInit {
   @Input() titleTable!: string;
-  @Input() dataTable!: DataInt[];
+  @Input() dataTable!: DataInt[] | null;
   @Output() stateSection = new EventEmitter<boolean>();
   @Output() dataEdit = new EventEmitter<DataInt>();
   @Output() dataDelete = new EventEmitter<DataInt>();

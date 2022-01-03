@@ -10,18 +10,9 @@ import Swal, { SweetAlertIcon } from 'sweetalert2';
 })
 //!TODO:Fijate en los fill table cuando hagas algun cambio.
 export class HomeComponent {
-  inData!: DataInt[];
-  outData!: DataInt[];
-  otherData!: DataInt[];
-
-  inTotal: number = 0;
-  outTotal: number = 0;
-  otherTotal: number = 0;
-  resumeTotal: number = 0;
-
   /* [[1->Entrada]]-[[2->Salida]]-[[3->Externo]] */
   sectionTable: number = 2;
-  titleTable: string = 'Selecciona una categoría';
+  titleTable: string = 'Salida';
   dataTable!: DataInt[];
   /*[[true -> ViewForm]]*/
   dataForm?: DataInt;
@@ -30,42 +21,22 @@ export class HomeComponent {
   todayDate: Date = new Date();
   formatDate: string = 'EEEE, d MMMM Y - hh:mm a';
 
-  constructor(public homeSvc: HomeService) {
-    this.refreshAll();
-  }
-  ngOnInit(): void {}
-  /* 
-    !Llenado de arrays
-   */
-  refreshAll(): void {
-    this.homeSvc.fillIn.subscribe((data) => (this.inData = data));
-    this.homeSvc.fillOut.subscribe((data) => (this.outData = data));
-    this.homeSvc.fillOther.subscribe((data) => (this.otherData = data));
-  }
+  constructor(public homeSvc: HomeService) {}
   /*
     !Seleccionado de data
   */
-  private selectDataIn(): void {
-    this.dataTable = this.inData;
-    this.titleTable = 'Entrada';
-  }
-  private selectDataOut(): void {
-    this.dataTable = this.outData;
-    this.titleTable = 'Salida';
-  }
-  private selectDataOther(): void {
-    this.dataTable = this.otherData;
-    this.titleTable = 'Externo';
+
+  selectDataInTable(section: number): void {
+    if (section == 1) this.titleTable = 'Entrada';
+    if (section == 2) this.titleTable = 'Salida';
+    if (section == 3) this.titleTable = 'Externo';
+    this.sectionTable = section;
   }
   /* 
     !Controles de tabla
   */
   //Recibe que data seleccionar
-  private changeDataInTable(section: number): void {
-    if (section == 1) this.selectDataIn();
-    if (section == 2) this.selectDataOut();
-    if (section == 3) this.selectDataOther();
-  }
+
   //Recibe la data del btn edit y la manda al form.
   editDataTable(data: DataInt): void {
     this.dataForm = data;
@@ -78,6 +49,7 @@ export class HomeComponent {
           if (res.msg == 'error')
             return this.handlerAlert('Error eliminando.', 'error');
           this.handlerAlert('Eliminado con exito.', 'success');
+          this.homeSvc.refreshData();
         },
         error: (error: Error) =>
           this.handlerAlert('Fallo comunicación con servidor.', 'error'),
@@ -94,18 +66,13 @@ export class HomeComponent {
   }
   //Recibe que tabla debe mostrar y ajusta los datos
   //[[1->Entrada]]-[[2->Salida]]-[[3->Externo]]
-  changeTableSection(selection: number): void {
-    this.sectionTable = selection;
-    this.changeDataInTable(selection);
-  }
+
   //Recibe la data del form a guardar, revisa el estado y entonces selecciona el service
   saveDataForm(dataForm: DataInt): void {
     //*Verifica si tiene ID es edit si no es uno new.
     if (dataForm._id) {
-      console.log('Es un edit');
       this.saveEditData(dataForm);
     } else {
-      console.log('Es uno nuevo');
       this.saveNewData(dataForm);
     }
   }
@@ -126,6 +93,7 @@ export class HomeComponent {
         if (res.msg == 'error')
           return this.handlerAlert('Error agregando.', 'error');
         this.handlerAlert('Agregado con exito.', 'success');
+        this.homeSvc.refreshData();
       },
       error: (error: Error) =>
         this.handlerAlert('Fallo comunicación con servidor.', 'error'),
@@ -138,6 +106,7 @@ export class HomeComponent {
         if (res.msg == 'error')
           return this.handlerAlert('Error editando.', 'error');
         this.handlerAlert('Editado con exito.', 'success');
+        this.homeSvc.refreshData();
       },
       error: (error: Error) =>
         this.handlerAlert('Fallo comunicación con servidor.', 'error'),
