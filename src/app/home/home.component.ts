@@ -29,56 +29,18 @@ export class HomeComponent {
 
   todayDate: Date = new Date();
   formatDate: string = 'EEEE, d MMMM Y - hh:mm a';
-  constructor(private homeSvc: HomeService) {
-    this.fillData();
+
+  constructor(public homeSvc: HomeService) {
+    this.refreshAll();
   }
   ngOnInit(): void {}
-  /*
+  /* 
     !Llenado de arrays
-  */
-  private fillData(): void {
-    this.fillInData();
-    this.fillOutData();
-    this.fillOtherData();
-  }
-  private fillInData(): void {
-    // Obtebemos la respuesta del service
-    this.homeSvc.getAll('in').subscribe({
-      next: (data: DataInt[]) => {
-        this.inData = data;
-        this.dataTable = data;
-        this.inTotal = this.calculateTotal(data);
-      },
-      error: (error) => {
-        this.handlerAlert('Fallo comunicación con servidor.', 'error');
-      },
-    });
-  }
-  private fillOutData(): void {
-    // Obtebemos la respuesta del service
-    this.homeSvc.getAll('out').subscribe({
-      next: (data: DataInt[]) => {
-        this.outData = data;
-        this.dataTable = data;
-        this.outTotal = this.calculateTotal(data);
-      },
-      error: (error) => {
-        this.handlerAlert('Fallo comunicación con servidor.', 'error');
-      },
-    });
-  }
-  private fillOtherData(): void {
-    // Obtebemos la respuesta del service
-    this.homeSvc.getAll('other').subscribe({
-      next: (data) => {
-        this.otherData = data;
-        this.dataTable = data;
-        this.otherTotal = this.calculateTotal(data);
-      },
-      error: (error: Error) => {
-        this.handlerAlert('Fallo comunicación con servidor.', 'error');
-      },
-    });
+   */
+  refreshAll(): void {
+    this.homeSvc.fillIn.subscribe((data) => (this.inData = data));
+    this.homeSvc.fillOut.subscribe((data) => (this.outData = data));
+    this.homeSvc.fillOther.subscribe((data) => (this.otherData = data));
   }
   /*
     !Seleccionado de data
@@ -96,16 +58,6 @@ export class HomeComponent {
     this.titleTable = 'Externo';
   }
   /* 
-    !Controles de Resumen
-  */
-  //Retorna el valor total del array que le asignen
-  private calculateTotal(arr: DataInt[]): number {
-    return arr.reduce((acc, el: DataInt) => (acc += el.quant), 0);
-  }
-  calculateResumeTotal(n1: number, n2: number, n3: number): number {
-    return n1 - n2 - n3;
-  }
-  /*
     !Controles de tabla
   */
   //Recibe que data seleccionar
@@ -125,11 +77,10 @@ export class HomeComponent {
         next: (res: RespInt) => {
           if (res.msg == 'error')
             return this.handlerAlert('Error eliminando.', 'error');
-          return this.handlerAlert('Eliminado con exito.', 'success');
+          this.handlerAlert('Eliminado con exito.', 'success');
         },
-        error: (error: Error) => {
-          this.handlerAlert('Fallo comunicación con servidor.', 'error');
-        },
+        error: (error: Error) =>
+          this.handlerAlert('Fallo comunicación con servidor.', 'error'),
       });
     }
   }
@@ -174,12 +125,10 @@ export class HomeComponent {
       next: (res: RespInt) => {
         if (res.msg == 'error')
           return this.handlerAlert('Error agregando.', 'error');
-        this.fillOutData();
-        return this.handlerAlert('Agregado con exito.', 'success');
+        this.handlerAlert('Agregado con exito.', 'success');
       },
-      error: (error: Error) => {
-        this.handlerAlert('Fallo comunicación con servidor.', 'error');
-      },
+      error: (error: Error) =>
+        this.handlerAlert('Fallo comunicación con servidor.', 'error'),
     });
   }
 
@@ -188,11 +137,10 @@ export class HomeComponent {
       next: (res: RespInt) => {
         if (res.msg == 'error')
           return this.handlerAlert('Error editando.', 'error');
-        return this.handlerAlert('Editado con exito.', 'success');
+        this.handlerAlert('Editado con exito.', 'success');
       },
-      error: (error: Error) => {
-        this.handlerAlert('Fallo comunicación con servidor.', 'error');
-      },
+      error: (error: Error) =>
+        this.handlerAlert('Fallo comunicación con servidor.', 'error'),
     });
   }
 

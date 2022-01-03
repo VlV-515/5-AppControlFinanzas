@@ -16,10 +16,10 @@
                 <div class="itemWrapper externoData">Externo (+)</div>
                 <div class="itemWrapper totalData">Total</div>
 
-                <div class="entradaData ">{{inTotal|currency:'MXN':'symbol'}}</div>
-                <div class="salidaData ">{{outTotal|currency:'MXN':'symbol'}}</div>
-                <div class="externoData ">{{otherTotal|currency:'MXN':'symbol'}}</div>
-                <div class="totalData ">{{calculateResumeTotal(inTotal,outTotal,otherTotal)|currency:'MXN':'symbol'}}</div>
+                <div class="entradaData ">{{homeSvc.inDataTotal$|async|currency:'MXN':'symbol'}}</div>
+                <div class="salidaData ">{{homeSvc.outDataTotal$|async|currency:'MXN':'symbol'}}</div>
+                <div class="externoData ">{{homeSvc.otherDataTotal$|async|currency:'MXN':'symbol'}}</div>
+                <div class="totalData ">{{homeSvc.totalData|currency:'MXN':'symbol'}}</div>
             </div>
         </div>
     </header>
